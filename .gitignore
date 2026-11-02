@@ -9,8 +9,8 @@ Thumbs.db  # Windows
 *.sln      # Visual Studio
 
 # 忽略编译产物
-bin/       # 可执行文件目录
-build/     # 构建目录
+*/bin/       # 可执行文件目录
+*/build/     # 构建目录
 *.o        # C/C++ 目标文件
 *.exe      # Windows 可执行文件
 *.out      # Linux/macOS 可执行文件
