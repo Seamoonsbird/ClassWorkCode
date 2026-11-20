@@ -41,7 +41,7 @@ counter #(.CNT_MAX(DEBOUNCE_TIME)) u_counter_5  (
     .cnt(CNT_debounced)
     );
 
-reg [6:0] count;
+
 
 // 消抖发送按钮
 reg btn_debounced;
@@ -71,27 +71,7 @@ end
 
 wire btn_debounced_pos_edge = ~sig_r3 & sig_r2;
 
-// 消抖计数
-always @(posedge clk or posedge rst) begin
-    if (rst) begin
-        count <= 2'd0;
-    end
 
-    else if (btn_debounced_pos_edge) begin
-        if (count < 99) begin
-            count <= count + 1;
-        end
-        else begin
-            count <= 2'd0;
-        end
-    end
-end
-
-wire [3:0] count_ten = count / 7'd10;
-wire [3:0] count_one = count % 7'd10;
-always @(*) begin
-    cnt = {count_ten, count_one};
-end
 
 
 // 发送的数据
@@ -166,5 +146,28 @@ uart_send u_uart_send (
     .data(send_data),
     .dout(uart_tx)
 );
+
+// 字符计数
+reg [6:0] count;
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        count <= 7'd0;
+    end
+
+    else if (valid) begin
+        if (count < 99) begin
+            count <= count + 1;
+        end
+        else begin
+            count <= 7'd0;
+        end
+    end
+end
+
+wire [3:0] count_ten = count / 7'd10;
+wire [3:0] count_one = count % 7'd10;
+always @(*) begin
+    cnt = {count_ten, count_one};
+end
 
 endmodule
