@@ -25,3 +25,5 @@ vendor/        # Go 依赖
 *.tmp
 logs/
 .vscode
+
+verilog-learn/Comprehensive&whack_a_mole/lab06_img/
